@@ -2805,45 +2805,5 @@ void __init setup_nr_node_ids(void);
 static inline void setup_nr_node_ids(void) {}
 #endif
 
-#if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM_ENHANCE)
-struct reclaim_param {
-	struct vm_area_struct *vma;
-
-	/* Number of pages scanned */
-	int nr_scanned;
-
-	/* max pages to reclaim */
-	int nr_to_reclaim;
-
-	/* pages reclaimed */
-	int nr_reclaimed;
-
-	/* flag that relcaim inactive pages only */
-	bool inactive_lru;
-
-	/* robin.ren@PSW.BSP.Kernel.Performance, 2019-03-13,
-	 * the target reclaimed process
-	 */
-	struct task_struct *reclaimed_task;
-};
-
-extern struct reclaim_param reclaim_task_anon(struct task_struct *task,
-		int nr_to_reclaim);
-
-/* Kui.Zhang@PSW.BSP.Kernel.Performance, 2019-01-01,
- * Extract the reclaim core code from task_mmu.c for /proc/process_reclaim*/
-extern ssize_t reclaim_task_write(struct task_struct* task,
-		char *buffer);
-
-#define PR_PASS		0
-#define PR_SEM_OUT	1
-#define PR_TASK_FG	2
-#define PR_TIME_OUT	3
-#define PR_ADDR_OVER	4
-#define PR_FULL		5
-#define PR_TASK_RUN	6
-#define PR_TASK_DIE	7
-#endif /* defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM_ENHANCE) */
-
 #endif /* __KERNEL__ */
 #endif /* _LINUX_MM_H */
